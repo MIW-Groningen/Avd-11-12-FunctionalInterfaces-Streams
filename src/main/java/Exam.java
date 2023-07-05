@@ -3,19 +3,18 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 public class Exam implements Comparable<Exam> {
-    private static Random randomizer = new Random();
-    private LocalDate date;
-    private Course course;
-    private LocalTime time;
-    private Map<Student, Double> results;
+    private static final Random randomizer = new Random();
+    private final LocalDate date;
+    private final Course course;
+    private final Map<Student, Double> results;
 
     public Exam(LocalDate date, Course course) {
         this.date = date;
         this.course = course;
-        this.time = getARandomTime();
         this.results = new HashMap<>();
         this.course.getExams().add(this);
     }
@@ -34,17 +33,20 @@ public class Exam implements Comparable<Exam> {
 
     @Override
     public boolean equals(Object o) {
-        return this.date.equals(((Exam)o).date) && this.course.equals(((Exam)o).course);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Exam exam = (Exam) o;
+        return Objects.equals(date, exam.date) && Objects.equals(course, exam.course);
     }
 
     @Override
     public int hashCode() {
-        return this.date.hashCode() + 701 * this.course.hashCode();
+        return Objects.hash(date, course);
     }
 
     @Override
     public int compareTo(Exam o) {
-        int result = this.date.compareTo(o.date);;
+        int result = this.date.compareTo(o.date);
         if (result == 0) {
             result = this.course.compareTo(o.course);
         }
@@ -68,7 +70,7 @@ public class Exam implements Comparable<Exam> {
 
     /**
      * finds a suitable random date for a new Exam of a Course
-     * (on a day where no Exam has been scheduled already)
+     * (on a day when no Exam has been scheduled already)
      * @param course
      * @return
      */

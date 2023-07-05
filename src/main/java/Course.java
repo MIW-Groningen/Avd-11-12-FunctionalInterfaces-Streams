@@ -1,16 +1,12 @@
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class Course implements Comparable<Course> {
-    private String code;
+    private final String code;
     private String title;
     private int ects;
-    private Set<Exam> exams;
+    private final Set<Exam> exams;
 
     public Course(String code) {
         this.code = code;
@@ -31,12 +27,15 @@ public class Course implements Comparable<Course> {
 
     @Override
     public boolean equals(Object o) {
-        return this.code.equals(((Course)o).code);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(code, course.code);
     }
 
     @Override
     public int hashCode() {
-        return this.code.hashCode();
+        return Objects.hash(code);
     }
 
     @Override
@@ -117,9 +116,9 @@ public class Course implements Comparable<Course> {
         return gradeAverage;
     }
 
-    private static Random randomizer = new Random();
+    private static final Random randomizer = new Random();
 
-    private static Course[] theCourses = {
+    private static final Course[] theCourses = {
             new Course("1019MAT", "ESK Mathematics", 2),
             new Course("1019DUT", "ESK Dutch", 2),
             new Course("1019ENG", "ESK English", 2),

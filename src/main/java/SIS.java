@@ -1,20 +1,18 @@
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class SIS {
     // solutionVariant == 0: execute no solution
     // solutionVariant == 1: execute for-loop solution
     // solutionVariant > 1: execute .forEach() solution
     // solutionVariant < 0: execute .stream() solution
-    public static int solutionVariant = 2;
+    public static int solutionVariant = 1;
 
-    private static Random randomizer = new Random();
+    private static final Random randomizer = new Random();
 
-    private Set<Course> courses;
-    private Set<Student> students;
+    private final Set<Course> courses;
+    private final Set<Student> students;
 
     @Override
     public String toString() {
@@ -29,8 +27,8 @@ public class SIS {
     /**
      * counts the number of students that have this course as part of their requirements
      *
-     * @param course
-     * @return
+     * @param course    Course to get number of student for
+     * @return          Number of Students who have the given Course as a requirement
      */
     public int getNStudentsRequired(Course course) {
         int nStudents = 0;
@@ -161,7 +159,7 @@ public class SIS {
      * @return
      */
     public Set<Exam> findAllExams(Predicate<Exam> filter) {
-        Set<Exam> foundExams = new TreeSet<Exam>();
+        Set<Exam> foundExams = new TreeSet<>();
 
         // TODO-1: find all exams using .forEach()
         if (SIS.solutionVariant > 0) {

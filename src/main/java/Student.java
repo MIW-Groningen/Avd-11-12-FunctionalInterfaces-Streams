@@ -1,16 +1,13 @@
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Student implements Comparable<Student> {
-    private static Random randomizer = new Random();
+    private static final Random randomizer = new Random();
     private static int lastNumber = 500900000;
 
-    private int number;
+    private final int number;
     private String name;
-    private Set<Course> requirements;
-    private Set<Exam> exams;
+    private final Set<Course> requirements;
+    private final Set<Exam> exams;
 
     public Student(int number) {
         this.number = number;
@@ -36,12 +33,15 @@ public class Student implements Comparable<Student> {
 
     @Override
     public boolean equals(Object o) {
-        return this.number == ((Student)o).number;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return number == student.number;
     }
 
     @Override
     public int hashCode() {
-        return this.number;
+        return Objects.hash(number);
     }
 
     @Override
@@ -50,18 +50,16 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     * indicates whether a course is part of the requirements of a Student
-     * @param course
-     * @return
+     * @param course course to be checked
+     * @return whether the course is part of the requirements of this Student
      */
     public boolean requires(Course course) {
         return this.requirements.contains(course);
     }
 
     /**
-     * indicates whether a Student has passed a Course
-     * @param course
-     * @return
+     * @param course to be checked
+     * @return whether this Student has passed the given Course
      */
     public boolean hasPassed(Course course) {
         return this.getBestResult(course) >= 5.5;
@@ -69,8 +67,8 @@ public class Student implements Comparable<Student> {
 
     /**
      * retrieves the best Exam result of the Student for the given Course
-     * @param course
-     * @return      returns 0.0 if no Exam result was registered for the Student yet
+     * @param course    The Course to get the result for
+     * @return          returns 0.0 if no Exam result was registered for the Student yet
      */
     public double getBestResult(Course course) {
         double bestResult = 0;
@@ -90,7 +88,7 @@ public class Student implements Comparable<Student> {
 
     /**
      * Calculates the total number of ECTS of all Course requirements of a Student
-     * @return
+     * @return Total ECTS this Student is required to get
      */
     public int getRequiredECTS() {
         int ects = 0;

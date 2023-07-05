@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Names {
-    private static Random randomizer = new Random();
+    private static final Random randomizer = new Random();
 
     public static String nextFirstName() {
         return firstNames[randomizer.nextInt(firstNames.length)];
@@ -11,7 +11,7 @@ public class Names {
         return surnames[randomizer.nextInt(surnames.length)];
     }
 
-    private static String[] firstNames = {
+    private static final String[] firstNames = {
             "James", "Mary",
             "John", "Patricia",
             "Robert", "Jennifer",
@@ -114,8 +114,7 @@ public class Names {
             "Bradley", "Jane",
     };
 
-    private static String[] surnames = {
-
+    private static final String[] surnames = {
             "SMITH",
             "JOHNSON",
             "WILLIAMS",
